@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Number Of Players</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -29,9 +29,37 @@
         top:10px;
         width:400px;
         height:100px;
+        cursor: pointer;
     }
 
 </style>
+    <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        let config = {
+            apiKey: "AIzaSyBzJhjPTm8O_pdF3u7JCkFnYjhArX3Fte4",
+            authDomain: "scout-game.firebaseapp.com",
+            databaseURL: "https://scout-game.firebaseio.com",
+            projectId: "scout-game",
+            storageBucket: "scout-game.appspot.com",
+            messagingSenderId: "277037324529"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script>
+       let fb=firebase.database();
+        let ids = window.location.hash.substring(1);
+        keys=ids.split('#');
+        userId=keys[0];
+        playerId=keys[1];
+        function singlePlayer(){
+            window.location.replace("GameType.html#"+userId+"#"+playerId+"#1"); // 1 --> single player
+        }
+        function multiplayer(){
+            fb.ref('scout-game/'+userId+'/').child(playerId+'/active').set(1);
+            window.location.replace("lobby.html#"+userId+"#"+playerId+"#m"); // m --> multiplayer
+        }
+    </script>
 </head>
 
 <body class="bg">
@@ -42,8 +70,8 @@
     </div>
 
     <div align="center">
-        <a href="Camera1.html"><img src="page5/emoji-5-single-player-button.png" alt="Single Player" class="button-image"></a><br><br>
-        <a href="#"><img src="page5/emoji-5-multiplayer-button.png" alt="Multiplayer" class="button-image"></a>
+        <img src="page5/emoji-5-single-player-button.png" alt="Single Player" class="button-image" onclick="singlePlayer()"><br><br>
+        <img src="page5/emoji-5-multiplayer-button.png" alt="Multiplayer" class="button-image" onclick="multiplayer()">
     </div>
 
 
