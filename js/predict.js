@@ -1,7 +1,14 @@
 points=0;
+wrongPredictionCounter=0;
+let neededPath= window.location.hash.substring(1);
+let splitPath=neededPath.split('#');
+let minutes=splitPath[3];
+let playerId=splitPath[1];
+let userId=splitPath[0];
+
 $(document).ready(function () {
 
-    asyncTimer();
+    asyncTimer(minutes);
 
     $("#predict-button").click(async function () {
         if (model == undefined) {
@@ -57,19 +64,22 @@ $(document).ready(function () {
 
     });
 })
-async function asyncTimer(){
+async function asyncTimer(mnts){
     let sec=0;
-    let min=0;
+    let min=mnts;
     await setInterval(()=>{
         document.getElementById("seconds").innerHTML=sec;
         document.getElementById("minutes").innerHTML=min;
-        sec++;
-        if(sec===60){
-            sec=0;
-            min++;
-            if(min===10){
+
+        if(sec===0){
+            if(min === 0) {
                 window.location.replace("Loser.html");
             }
+            sec=59;
+            min--;
+        }
+        else if(sec>0){
+           sec--;
         }
     },1000);
 }
