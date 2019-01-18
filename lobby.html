@@ -72,7 +72,7 @@
                                     fb.ref('scout-game/'+userId).on('value',function(snapshot){
                                         start=snapshot.val().start;
                                         if(start===1){
-                                            window.location.href="camera1.html#"+userId+"#"+playerKey+"#"+numberOfPlayer+"#"+minutes;
+                                            window.location.href="camera1.html#"+userId+"#"+playerKey+"#"+numberOfPlayer+"#10";
                                         }
 
                                     });
@@ -145,7 +145,7 @@
                         fb.ref('scout-game/'+userId).on('value',function(snapshot){
                             start=snapshot.val().start;
                             if(start===1){
-                                window.location.href="camera1.html#"+userId+"#"+playerId+"#"+numberOfPlayer+"#"+minutes;
+                                window.location.href="camera1.html#"+userId+"#"+playerId+"#"+numberOfPlayer+"#10";
                             }
 
                         });
