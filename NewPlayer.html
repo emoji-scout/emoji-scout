@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Player</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/firebase-app.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/firebase-database.js"></script>
+    <script>
+        // Initialize Firebase
+        let config = {
+            apiKey: "AIzaSyBzJhjPTm8O_pdF3u7JCkFnYjhArX3Fte4",
+            authDomain: "scout-game.firebaseapp.com",
+            databaseURL: "https://scout-game.firebaseio.com",
+            projectId: "scout-game",
+            storageBucket: "scout-game.appspot.com",
+            messagingSenderId: "277037324529"
+        };
+
+        firebase.initializeApp(config);
+    </script>
+   <script>
+
+       let userId = window.location.hash.substring(1);
+
+      //alert(userId);
+       let database=firebase.database();
+        let db=database.ref('scout-game');
+
+        let guardian=db.child(userId);
+
+       let db2=database.ref(/scout-game/+userId );
+
+
+
+
+       insert=()=> {
+
+          guardian.push({
+               name: $('#name').val(),
+               age: $('#age').val(),
+               lastGameType:"",
+               specifiedPoints:0,
+               specifiedTime:0.0,
+               LastGamePoints:0,
+               LastGameTime:0.0,
+               score: 0
+           });
+            window.location.replace("Players.html#"+userId);
+       }
+
+   </script>
+
+    <style>
+        .bg{
+            background-image: url("page2/emoji-2-bg.png");
+            background-size: cover;
+        }
+        .title{
+
+            width:370px;
+            height:110px;
+            position: relative;
+
+            margin-top: 100px;
+
+        }
+        .name{
+            position: relative;
+            margin-top: 50px;
+        }
+        .age{
+            border-color: #ff6d0d;
+            border-width: medium;
+            border-radius: 3px;
+            border-style: solid;
+            width: 300px;
+            height:40px;
+        }
+        .name1{
+            border-color: #ff6d0d;
+            border-width: medium;
+            border-radius: 3px;
+            border-style: solid;
+            width: 300px;
+            height:40px;
+        }
+        .button{
+            position: relative;
+
+            padding: 10px;
+            line-height: 50px;
+
+            text-indent: 10px;
+            font-family: Verdana, Geneva, sans-serif;
+            font-size: 16px;
+            color: #333;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+           border-color: rgba(255,255,255,0);
+            background-color: rgba(255, 255, 255, 0);
+            cursor: pointer;
+
+
+        }
+
+
+    </style>
+</head>
+
+
+<body class="bg">
+<div class="container-fluid" >
+
+    <div  align="center">
+        <img src="page2/emoji-2-title.png" class="title"> <br>
+    </div>
+
+
+    <form class="form-group" method="post">
+        <div>
+
+     <div class="name" align="center">
+         <input type="text" name="name" id="name" class="name1" width="500" height="280" required><br><br>
+     </div>
+
+        </div>
+        <div  align="center">
+            <input type="text" name="age" id="age" class="age" width="500" height="280" required><br>
+        </div>
+<div  align="center" >
+
+            <img src="page2/emoji-2-button.png"  width="320" height="100" onclick="insert()" class="button">
+
+</div>
+
+
+
+        <!--<input type="submit" value="Submit"> -->
+    </form>
+
+
+
+</div>
+</body>
+</html>

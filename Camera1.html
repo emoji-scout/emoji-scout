@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Scout</title>
+    <script type="text/javascript" src="js/Emoji_Classes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Knewave" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        .bg{
+            background-image: url("page8/emoji-8-background.png");
+            background-size: cover;
+        }
+        .points{
+            width:90px;
+            height: 90px;
+        }
+
+        .timer{
+            position: relative;
+            bottom: 23px;
+            width:96px;
+            height: 90px;
+        }
+        .time-text{
+            position: relative;
+            top: 15px;
+            color: white;
+        }
+        .points-text{
+            font-family: 'Knewave', cursive;
+            font-size: 28px;
+            color: #eed267;
+            position: relative;
+            top: 20px;
+        }
+        .right{
+            position: relative;
+            bottom: 30px;
+            left:20px;
+            font-size: 30px;
+            color: white;
+            font-family: 'Knewave', cursive;
+        }
+        .left{
+            position: relative;
+            right:20px;
+        }
+        #webcam {
+            text-align: center;
+            position: fixed;
+            right: 0;
+            bottom:0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+        #awesome{
+            font-size:60px;
+            font-family: 'Knewave', cursive;
+            color: #9ece34;
+            position: relative;
+            top:150px;
+            left:50px;
+        }
+        @keyframes awsm {
+            from {font-size: 0;}
+            to {font-size: 60px;}
+        }
+
+        .awesomeAnimation{
+            width: 100px;
+            height: 100px;
+            animation-name: awsm;
+            animation-duration: 0.5s;
+        }
+
+        @keyframes try {
+            from {font-size: 0;}
+            to {font-size: 60px;}
+        }
+        #tryAgain{
+
+            font-size:60px;
+            font-family: 'Knewave', cursive;
+            color: #fc1051;
+            position: relative;
+            top:150px;
+            left:50px;
+        }
+        .tryAgainAnimation{
+            width: 100px;
+            height: 100px;
+            animation-name: try;
+            animation-duration: 0.5s;
+        }
+
+
+        .input-button{
+            text-align: left;
+            cursor: pointer;
+            position : relative;
+            left: 50px;
+            width:160px;
+            height:50px;
+            bottom: 50px;
+        }
+        .predict-button{
+            cursor: pointer;
+            position:relative;
+            top:35px;
+            width:160px;
+            height:50px;
+        }
+        .demo-output{
+           position: relative;
+            right:50px;
+            top:87px;
+        }
+        footer{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+
+        }
+        .mobilenet-demo-container{
+            position: relative;
+            right: 70px;
+            bottom:50px;
+            text-align: right;
+        }
+
+        #test-image{
+            width:50px;
+            height:50px;
+            position: relative;
+            left:70px;
+
+        }
+
+        #prediction{
+            position: relative;
+            right:50px;
+            color: white;
+        }
+
+    </style>
+
+</head>
+<body class="bg">
+<div class="container-fluid" >
+
+    <p align="left" class="left" ><img src="page8/emoji-8-star-icon.png" alt="score" class="points" align="left"><span id="points" class="points-text">0</span> </p>
+    <p align="right" class="right"> <span id="minutes">0</span>:<span id="seconds">0</span> <span class="time-text"></span><img src="page8/emoji-8-timer-icon.png" alt="timer"  class="timer" align="right"></p>
+        <div class="out-box" id="select-file-box" style="display: none;" >
+            <img id='test-image' style = "width: 70%; float: left; hieght: 70%;" />
+
+        </div>
+        <div class="out-box" id="predict-box" style="display: none; float: left" align="right" >
+
+            <p id="prediction"></p>
+            <br>
+            <p><b style="color: #c2c2c2 !important; font-style: italic; font-weight: 100; font-size: 11px;"></b></p>
+            <ul id="predict-list">
+            </ul>
+        </div>
+
+<div align="center">
+    <video autoplay muted id="webcam"  width="600" height="600"></video>
+    <span id="awesome" class="awesomeAnimation" hidden>AWESOME</span>
+    <span id="tryAgain" class="tryAgainAnimation" hidden>Try Again</span>
+
+    <footer class="footer">
+        <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+            <div class="demo-output">
+                <div class="demo">
+                    <div id="progress-box" style="display: none; width: 100% !important;">
+                     <!--   <img src="assets/loading.gif" id="demo-load" width="100px" />
+                        <p style="color: white;">Loading emojiModel model..</p>-->
+                    </div>
+                </div>
+
+            <div class="demo1" align="left">
+
+                <img src="page8/emoji-button.png"  onclick="loadDemoImage()" id="demo-image-button" class="input-button">
+
+            </div>
+            </div>
+
+        </div>
+
+            <div class="mobilenet-demo-container" >
+                <div class="demo-wrapper" >
+                    <!--    <button id="predict-button" class="input-button predict-button"> predict</button>-->
+                      <img src="page8/Predict-button.png" id="predict-button" class="input-button predict-button" >
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </footer>
+</div>
+</div>
+</body>
+<script type="text/javascript" src="js/Main.js"></script>
+<script type="text/javascript" src="js/predict.js"></script>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" >
+    <title>Players</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Mali|Schoolbell|Sue+Ellen+Francisco" rel="stylesheet">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Sigmar+One" rel="stylesheet">
+    <script src="js/firebase-app.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/firebase-database.js"></script>
+    <script>
+        // Initialize Firebase
+        let config = {
+            apiKey: "AIzaSyBzJhjPTm8O_pdF3u7JCkFnYjhArX3Fte4",
+            authDomain: "scout-game.firebaseapp.com",
+            databaseURL: "https://scout-game.firebaseio.com",
+            projectId: "scout-game",
+            storageBucket: "scout-game.appspot.com",
+            messagingSenderId: "277037324529"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script>
+        let userId = window.location.hash.substring(1);
+        // alert(userId);
+        let database=firebase.database();
+
+        function getData(){
+
+            let db=database.ref(/scout-game/ + userId );
+
+            db.on('value',function (snapshot){
+              $("#table").html('');
+
+                snapshot.forEach(function (childSnapshot) {
+                    if(childSnapshot.val().name) {
+
+                        $("#table").append('<tr><td><a href="GameType.html#'+userId+'#'+childSnapshot.key+'"><img src="page3/emoji-3-feild-empty.png" class="players-img" ></a></td> <td class="name">' + childSnapshot.val().name + '</td></td></tr>');
+
+                    }else{
+
+                    }
+                });
+
+                $("#table").append(' <tfoot> <tr><td><a class="foot" href="NewPlayer.html#'+userId+'"><img src="page3/emoji-3-button.png"  style=" position: relative;width:275px;'
+                    +'height:45px;'
+                    +' top:65px;left:63px;margin-top: -50px;"></a></td><td></td></tfoot>');
+
+            });
+
+
+        }
+        getData();
+
+//        alert(user.getUserId());
+
+    </script>
+
+    <style>
+        .bg{
+            background-image: url("page3/BG3.png");
+
+            background-size: cover;
+
+        }
+        .title-img{
+
+            width:430px;
+            height:90px;
+            position: relative;
+            right:5px;
+            margin-top: 50px;
+        }
+
+        .players-img{
+            position: relative;
+            width:351px;
+            height:90px;
+            top:70px;
+            left:34px;
+            margin-top: -50px;
+        }
+
+        .name {
+            display: flex;
+            text-align: left;
+            position: relative;
+            top: 45px;
+            right: 270px;
+            color: white;
+            font-size: 27px;
+            font-family: 'Schoolbell', cursive;
+        }
+
+
+    </style>
+</head>
+<body class="bg">
+<div class="container-fluid" >
+    <div class="title" align="center">
+        <img src="page3/emoji-3-title.png" class="title-img"> <br>
+    </div>
+
+
+<table  align="center">
+<tbody id="table" >
+
+</tbody>
+
+
+</table>
+
+</div>
+
+</body>
+</html>
