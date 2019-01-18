@@ -78,7 +78,11 @@
 function start(){
     let minutes=document.getElementById('min').value
 
-   window.location.href = 'camera1.html' + '#' + ids+"#"+minutes;
+    if(playerKey[2]===1){
+        window.location.href = 'camera1.html' + '#' + ids+"#"+minutes;
+    }
+    else if(playerKey[2]==="m")
+        window.location.href = 'lobby.html' + '#' + ids+"#"+minutes;
 }
     </script>
 </head>
