@@ -65,11 +65,9 @@
                             });
 
                             fb.ref('scout-game/'+userId+'/').update({"start":1});
-                            fb.ref('scout-game/'+userId+'/').child(player1key+'/destAccept').set(players[0]);
-                            fb.ref('scout-game/'+userId+'/').child(player2key+'/destAccept').set(players[1]);
-                            fb.ref('scout-game/'+userId+'/').child(player1key+'/destAccept').set(players[0]);
-                            fb.ref('scout-game/'+userId+'/').child(player2key+'/destAccept').set(players[1]);
-
+                            fb.ref('scout-game/'+userId+'/').child(player1key+'/destAccept').set(players[1]);
+                            fb.ref('scout-game/'+userId+'/').child(player2key+'/destAccept').set(players[0]);
+                           
                             d= new Date();
                             date=d.toLocaleDateString();
                             time=d.toLocaleTimeString();
