@@ -9,9 +9,8 @@
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
     <link href="https://fonts.googleapis.com/css?family=Sigmar+One" rel="stylesheet">
 
@@ -34,16 +33,17 @@
         let userId = window.location.hash.substring(1);
 
         fb.ref('scout-game/'+userId).on('value',function(snapshot) {
-                players=snapshot.val().lastRequest.split('-')
-                $("#player1").html(players[0]);
-               $("#player2").html(players[1]);
-
-
+            players=snapshot.val().lastRequest.split('-');
+            $("#player1").html(players[0]);
+            $("#player2").html(players[1]);
         });
 
 
+
         $(function () {
+
             $( "#dialog-confirm" ).dialog({
+
                 autoOpen:false,
                 resizable: false,
                 height: "auto",
@@ -53,8 +53,34 @@
                     text: "Approve",
                     "class": "dialog-btn-accept",
                     click: function () {
-                      fb.ref('scout-game/'+userId+'/').update({"start":1});
-                        $(this).dialog("close");
+                        $( this ).dialog( "close" );
+                        fb.ref(/scout-game/+userId ).on('value',function (snapshot){
+                            snapshot.forEach(function (childSnapshot){
+                                if(childSnapshot.val().name===players[0]){
+                                    player1key=childSnapshot.key;
+                                }
+                                else if(childSnapshot.val().name===players[1]){
+                                    player2key=childSnapshot.key;
+                                }
+                            });
+
+                            fb.ref('scout-game/'+userId+'/').update({"start":1});
+                            fb.ref('scout-game/'+userId+'/').child(player1key+'/destAccept').set(players[0]);
+                            fb.ref('scout-game/'+userId+'/').child(player2key+'/destAccept').set(players[1]);
+                            fb.ref('scout-game/'+userId+'/').child(player1key+'/destAccept').set(players[0]);
+                            fb.ref('scout-game/'+userId+'/').child(player2key+'/destAccept').set(players[1]);
+
+                            d= new Date();
+                            date=d.toLocaleDateString();
+                            time=d.toLocaleTimeString();
+
+
+                            fb.ref('scout-game/'+userId+'/').update({
+                                "startDate":date,
+                                "startTime":time
+                            });
+
+                        });
                     }
                 },
                     {
@@ -64,41 +90,35 @@
                             $( this ).dialog( "close" );
                         }
                     }],
-
             });
-        })
+        });
 
         fb.ref('scout-game/'+userId).on('value',function(snapshot){
             lastRequest=snapshot.val().lastRequest;
-            if(lastRequest){
+            start=snapshot.val().start;
+            if(lastRequest && start===""){
                 $( "#dialog-confirm" ).dialog('open');
             }
-
         });
+
         let database=firebase.database();
 
         function getData(){
             let db=database.ref(/scout-game/ + userId );
             db.on('value',function (snapshot){
-
                 $("#table").html('');
                 snapshot.forEach(function (childSnapshot){
                     if(childSnapshot.val().active===1){
                         $('#noActive').hide();
-                        $('.foot').show();
-                        $("#table").append('<tr><td><a href="GameType.html#'+userId+'#'+childSnapshot.key+'"><img src="page3/emoji-3-feild-empty.png" class="players-img" onclick="goToGameType()"></a></td> <td class="name">' + childSnapshot.val().name + '</td></td></tr>');
+                        $("#table").append('<tr class="name"> <td >' + childSnapshot.val().name+'</td>' +
+                            '<td>'+childSnapshot.val().destAccept+'</td><td>'+childSnapshot.val().LastGamePoints+'</td><td>'+snapshot.val().startDate+'</td><td>'+snapshot.val().startTime+'</td></tr>');
+
                     }else{
                     }
                 });
             });
         }
         getData();
-
-       function gotToNewPlayer(){
-           window.location.replace("newPlayer.html#"+userId);
-        }
-
-        //        alert(user.getUserId());
 
     </script>
 
@@ -155,10 +175,6 @@
             font-family: "Marker Felt";
             background-color: rgba(2, 8, 6, 0.77);
             color: white;
-
-
-
-
         }
         #dialog-confirm{
             position: relative;
@@ -179,18 +195,8 @@
             font-family: "Marker Felt";
             text-align: center;
             color: white;
-
         }
 
-        .players-img{
-            position: relative;
-            width:351px;
-            height:90px;
-            top:70px;
-            left:34px;
-            margin-top: -50px;
-
-        }
         #noActive{
             font-size: 40px;
             font-family: "Marker Felt";
@@ -198,38 +204,51 @@
             top:50px;
             color: rgba(252, 255, 242, 0.95)
         }
-        .name {
 
-            display: flex;
-            text-align: left;
-            position: relative;
-            top: 45px;
-            right: 270px;
-            color: white;
-            font-size: 27px;
-            font-family: 'Schoolbell', cursive;
+        .table{
+            position:relative;
+            top:45px;
         }
 
+        tr{
+            background-color: #ffa183;
+            text-align:center;
+            font-family: 'Schoolbell', cursive;
+            color: white;
+            font-size: 24px;
+        }
 
     </style>
 </head>
+
 <body class="bg">
-<div class="container-fluid" >
+<div class="container" >
     <div  align="center">
         <h1 class="title" align="center">Dashboard</h1>
     </div>
     <div id="dialog-confirm"  title="Game Request" >
         <p id="dialog-text" ><span class="ui-icon ui-icon-alert" style="float:right; margin:12px 12px 20px 0;"></span><span id="player1"></span> and <span id="player2"></span> want to play together.<br> Approve?</p>
     </div>
+</div>
+<h3 id="noActive" align="center">No Active Players</h3>
 
-    <table  align="center">
-        <tr><td id="noActive"> No Active Players</td></tr>
+<div align="center">
 
-        <tbody id="table" >
+    <div class="row">
+        <div class="col-sm-2">
+        </div>
 
-        </tbody>
+        <div class="col-sm-8">
+            <table  align="center" class="table">
+                <thead> <tr style="font-weight: bolder;"><td>Player 1 &nbsp </td><td>Player 2  &nbsp</td><td> Points </td><td>Date</td><td>Time</td></tr></thead>
 
-    </table>
+                <tbody id="table">
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
 
 </div>
 
