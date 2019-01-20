@@ -60,6 +60,8 @@
               requestSource:"",
               requestDest:""
            });
+           
+           database.ref('scout-game/'+userId+'/start').set("");
             window.location.replace("Players.html#"+userId);
        }
 
