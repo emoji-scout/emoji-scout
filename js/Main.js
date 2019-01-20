@@ -45,6 +45,7 @@ function preprocessImage(image, modelName) {
 }
 let randomnumber=0;
 let index = 0;
+loadDemoImage();
 function loadDemoImage() {
     document.getElementById("predict-box").style.display = "table-cell";
     //  document.getElementById("prediction").innerHTML = "Click predict to find my label!";
