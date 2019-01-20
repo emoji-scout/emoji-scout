@@ -46,6 +46,9 @@ $(document).ready(function () {
             document.getElementById("prediction").innerHTML += "<br><b>"+ " Correct !!"+ "</b>";
             $('#awesome').show();
             awesomeTimer();
+             fb=firebase.database();
+            fb.ref('scout-game/'+userId+'/').child(playerId+'/LastGamePoints').set(points);
+            loadDemoImage();
 
         }
         else {
@@ -53,14 +56,18 @@ $(document).ready(function () {
             console.log(del);
             if(del>=0){
                 arr.splice(del,1);}
+             if(wrongPredictionCounter<2) {
             document.getElementById("prediction").innerHTML = " Emoji-Scout predicted <br><b>" + results[0].className + "</b>";
             document.getElementById("prediction").innerHTML += "<br><b>"+" Required <br><b>" + randomnumber + "</b>";
             document.getElementById("prediction").innerHTML += "<br><b>"+" Wrong !!"+ "</b>";
             $('#tryAgain').show();
             tryagain();
+            wrongPredictionCounter++;
+        }else {
+            loadDemoImage();
         }
 
-
+        }
 
     });
 })
