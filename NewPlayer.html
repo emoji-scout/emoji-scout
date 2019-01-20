@@ -116,8 +116,14 @@
            border-color: rgba(255,255,255,0);
             background-color: rgba(255, 255, 255, 0);
             cursor: pointer;
-
-
+        }
+         @font-face {
+            font-family: "Marker Felt";
+            src: url("fonts/DSMarkerFelt.ttf");
+        }
+        input{
+            font-family: "Marker Felt";
+            font-size: 25px;
         }
 
 
@@ -142,7 +148,7 @@
 
         </div>
         <div  align="center">
-            <input type="text" name="age" id="age" class="age" width="500" height="280" required><br>
+            <input type="number" placeholder="Age" name="age" id="age" class="age" width="500" height="280" required min="3" max="30"><br>
         </div>
 <div  align="center" >
 
