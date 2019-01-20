@@ -17,6 +17,20 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        let config = {
+            apiKey: "AIzaSyBzJhjPTm8O_pdF3u7JCkFnYjhArX3Fte4",
+            authDomain: "scout-game.firebaseapp.com",
+            databaseURL: "https://scout-game.firebaseio.com",
+            projectId: "scout-game",
+            storageBucket: "scout-game.appspot.com",
+            messagingSenderId: "277037324529"
+        };
+
+        firebase.initializeApp(config);
+    </script>
     <style>
         .bg{
             background-image: url("page8/emoji-8-background.png");
