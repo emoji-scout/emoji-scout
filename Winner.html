@@ -4,6 +4,30 @@
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Luckiest+Guy|Permanent+Marker|Titan+One" rel="stylesheet">
     <title>You Win</title>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+
+    <link href="https://fonts.googleapis.com/css?family=Sigmar+One" rel="stylesheet">
+
+    <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        let config = {
+            apiKey: "AIzaSyBzJhjPTm8O_pdF3u7JCkFnYjhArX3Fte4",
+            authDomain: "scout-game.firebaseapp.com",
+            databaseURL: "https://scout-game.firebaseio.com",
+            projectId: "scout-game",
+            storageBucket: "scout-game.appspot.com",
+            messagingSenderId: "277037324529"
+        };
+        firebase.initializeApp(config);
+    </script>
+
     <style>
         .bg{
             background-image: url("page7/emoji-7-background.png");
@@ -34,19 +58,74 @@
             width: 380px;
             height: 100px;
         }
+        .loser{
+            position: relative;
+            top:80px;
+            color: #fc1051;
+            font-family: 'Titan One', cursive;
+            font-size: 65px;
+        }
+
     </style>
+    <script>
+        $(document).ready(function(){
+        let userId = window.location.hash.substring(1);
+
+
+
+       // playerId=idsArr[1];
+        fb=firebase.database();
+        fb.ref('scout-game/'+userId).on('value',function (snapshot) {
+           lastRequest=snapshot.val().lastRequest;
+          players=lastRequest.split('-');
+          player1=players[0];
+          player2=players[1];
+            snapshot.forEach(function (childSnapshot){
+                if(childSnapshot.val().name===player1){
+                    //  player1key=childSnapshot.key;
+                     player1points=childSnapshot.val().LastGamePoints;
+                   // alert(player1points)
+                }
+                else if(childSnapshot.val().name===player2){
+                    //  player2key=childSnapshot.key;
+                    player2points=childSnapshot.val().LastGamePoints;
+                }
+            });
+
+            if(player1points>player2points){
+                $('#winningPlayer').html(player1);
+                $('#winnerPoints').html(player1points);
+                $('#loser').html(player2);
+                $('#loserPoints').html(player2points);
+            }else if(player2points>player1points){
+                $('#winningPlayer').html(player2);
+                $('#winnerPoints').html(player2points);
+                $('#loser').html(player1);
+                $('#loserPoints').html(player1points);
+            }
+        });
+
+
+        })
+
+
+
+
+    </script>
 </head>
 <body class="bg">
 <div class="container-fluid" >
-<div align="center">
-    <h1 class="winner"> YOU WIN!<br> <span style="color: #fc1051 ">Leen</span></h1>
-</div>
+    <div align="center">
+        <h1 class="winner"> Winner is<br> <span id="winningPlayer" style="color: #fc1051 "></span></h1>
+    </div>
     <div class="points" align="center">
-     20  POINTS
+        <span id="winnerPoints"></span> POINTS
     </div>
-    <div class="time" align="center">
-       9:12  MINUTES
+    <div class="loser" align="center">
+        <h2><span id="loser"></span> Got <span id="loserPoints"></span> points<br></h2>
+        <h3 style="color:#ffffff">Try harder next time!</h3>
     </div>
+
     <div align="center" class="buttons">
         <a href=""><img src="page7/emoji-7-play-again-button.png" class="btn-image"></a>
     </div>
