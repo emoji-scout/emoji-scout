@@ -61,6 +61,7 @@
                             sourcePlayer=snapshot.val().requestSource;
                             lastRequest=sourcePlayer+"-"+destPlayer;
                             playerKey=snapshot.key;
+                            fb.ref('scout-game/'+userId+'/').child(playerKey+'/destAccept').set(sourcePlayer);
                         });
                         let db=fb.ref(/scout-game/ + userId );
                         db.on('value',function (snapshot){
