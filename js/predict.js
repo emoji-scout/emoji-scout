@@ -3,6 +3,7 @@ wrongPredictionCounter=0;
 let neededPath= window.location.hash.substring(1);
 let splitPath=neededPath.split('#');
 let minutes=splitPath[3];
+let NoOfPlayers=splitPath[2];
 let playerId=splitPath[1];
 let userId=splitPath[0];
 
@@ -86,6 +87,7 @@ async function asyncTimer(mnts){
                 if (NoOfPlayers === "1") {
                     // window.location.href="Result.html#"+userId+"#";
                 }
+        
             sec=59;
             min--;
         }
