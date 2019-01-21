@@ -1,7 +1,7 @@
 
 
 const webcamElement = document.getElementById('webcam');
-let arr= ['Watch','Umbrella','Suit','Sock','Shoe','Printer','Mouse','Mobile','Laptop','Keys','Keyboard','Handbag, Wallet','Flowerpot','Computer'];
+let arr= ['Mouse','Watch','Laptop','Keyboard','Printer','Umbrella','Suit','Sock','Shoe','Printer','Mobile','Keys','Keyboard','Handbag, Wallet','Flowerpot','Computer'];
 let maximum = 13;
 let model;
 
