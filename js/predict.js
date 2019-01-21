@@ -76,11 +76,12 @@ async function asyncTimer(mnts){
     let sec=0;
     let min=mnts;
     await setInterval(()=>{
+
         document.getElementById("seconds").innerHTML=sec;
         document.getElementById("minutes").innerHTML=min;
 
         if(sec===0){
-             if(min === 0) {
+            if(min === 0) {
                 if (NoOfPlayers === "m") {
                     window.location.href = "Winner.html#" + userId;
                 }
@@ -88,8 +89,7 @@ async function asyncTimer(mnts){
                 if (NoOfPlayers === "1") {
                     // window.location.href="Result.html#"+userId+"#";
                 }
-             }
-    
+            }
             sec=59;
             min--;
         }
