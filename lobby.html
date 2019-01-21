@@ -137,6 +137,10 @@
                     if(childSnapshot.key===playerId){
                         playerName=childSnapshot.val().name;
                     }
+                     if(childSnapshot.val().request===1){
+                    $("#playerName").html(childSnapshot.val().name);
+                    $("#requestSource").html(childSnapshot.val().requestSource);}
+                    
                     if(childSnapshot.val().active===1 && childSnapshot.key!==playerId){
                         $('#noActive').hide();
                         $('.choose').show();
