@@ -138,15 +138,15 @@
             height:50px;
         }
         .demo-output{
-           position: relative;
+            position: relative;
             right:50px;
             top:87px;
         }
         footer{
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
 
         }
         .mobilenet-demo-container{
@@ -160,7 +160,8 @@
             width:50px;
             height:50px;
             position: relative;
-            left:70px;
+           top:70px;
+            left:15px;
 
         }
 
@@ -178,56 +179,57 @@
 
     <p align="left" class="left" ><img src="page8/emoji-8-star-icon.png" alt="score" class="points" align="left"><span id="points" class="points-text">0</span> </p>
     <p align="right" class="right"> <span id="minutes">0</span>:<span id="seconds">0</span> <span class="time-text"></span><img src="page8/emoji-8-timer-icon.png" alt="timer"  class="timer" align="right"></p>
-        <div class="out-box" id="select-file-box" style="display: none;" >
-            <img id='test-image' style = "width: 70%; float: left; hieght: 70%;" />
 
-        </div>
-        <div class="out-box" id="predict-box" style="display: none; float: left" align="right" >
+    <div class="out-box" id="predict-box" style="display: none; float: left" align="right" >
 
-            <p id="prediction"></p>
-            <br>
-            <p><b style="color: #c2c2c2 !important; font-style: italic; font-weight: 100; font-size: 11px;"></b></p>
-            <ul id="predict-list">
-            </ul>
-        </div>
+        <p id="prediction"></p>
+        <br>
+        <p><b style="color: #c2c2c2 !important; font-style: italic; font-weight: 100; font-size: 11px;"></b></p>
+        <ul id="predict-list">
+        </ul>
+    </div>
 
-<div align="center">
-    <video autoplay muted id="webcam"  width="600" height="600"></video>
-    <span id="awesome" class="awesomeAnimation" hidden>AWESOME</span>
-    <span id="tryAgain" class="tryAgainAnimation" hidden>Try Again</span>
+    <div align="center">
+        <video autoplay muted id="webcam"  width="600" height="600"></video>
+        <span id="awesome" class="awesomeAnimation" hidden>AWESOME</span>
+        <span id="tryAgain" class="tryAgainAnimation" hidden>Try Again</span>
 
-    <footer class="footer">
-        <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-            <div class="demo-output">
-                <div class="demo">
-                    <div id="progress-box" style="display: none; width: 100% !important;">
-                     <!--   <img src="assets/loading.gif" id="demo-load" width="100px" />
-                        <p style="color: white;">Loading emojiModel model..</p>-->
+        <footer class="footer">
+            <div class="out-box" id="select-file-box" style="display: none;" align="center">
+                <img id='test-image' style = "width: 70%; float: left; hieght: 70%;" />
+
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="demo-output">
+                            <div class="demo">
+                                <div id="progress-box" style="display: none; width: 100% !important;">
+                                    <!--   <img src="assets/loading.gif" id="demo-load" width="100px" />
+                                       <p style="color: white;">Loading emojiModel model..</p>-->
+                                </div>
+                            </div>
+
+                            <div class="demo1" align="left">
+
+                                <img src="page8/emoji-button.png"  onclick="loadDemoImage()" id="demo-image-button" class="input-button">
+
+                            </div>
+                        </div>
+
                     </div>
-                </div>
 
-            <div class="demo1" align="left">
+                    <div class="mobilenet-demo-container" >
+                        <div class="demo-wrapper" >
+                            <!--    <button id="predict-button" class="input-button predict-button"> predict</button>-->
+                            <img src="page8/Predict-button.png" id="predict-button" class="input-button predict-button" >
+                        </div>
+                    </div>
 
-                <img src="page8/emoji-button.png"  onclick="loadDemoImage()" id="demo-image-button" class="input-button">
-
-            </div>
-            </div>
-
-        </div>
-
-            <div class="mobilenet-demo-container" >
-                <div class="demo-wrapper" >
-                    <!--    <button id="predict-button" class="input-button predict-button"> predict</button>-->
-                      <img src="page8/Predict-button.png" id="predict-button" class="input-button predict-button" >
                 </div>
             </div>
-
-        </div>
-        </div>
-    </footer>
-</div>
+        </footer>
+    </div>
 </div>
 </body>
 <script type="text/javascript" src="js/Main.js"></script>
