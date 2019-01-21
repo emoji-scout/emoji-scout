@@ -80,14 +80,16 @@ async function asyncTimer(mnts){
         document.getElementById("minutes").innerHTML=min;
 
         if(sec===0){
-             if (NoOfPlayers === "m") {
+             if(min === 0) {
+                if (NoOfPlayers === "m") {
                     window.location.href = "Winner.html#" + userId;
                 }
 
                 if (NoOfPlayers === "1") {
                     // window.location.href="Result.html#"+userId+"#";
                 }
-        
+             }
+    
             sec=59;
             min--;
         }
