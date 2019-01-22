@@ -57,7 +57,16 @@
             userId= firebase.auth().currentUser.uid;
           //  user.sendId(userId);
 
-            window.location.href = 'NewPlayer.html' + '#' + userId;
+            fb=firebase.database();
+            fb.ref('scout-game/').on('value',function(snapshot){
+                snapshot.forEach(function (childSnapshot){
+                    if(childSnapshot.key===userId){
+                        window.location.href = 'Players.html' + '#' + userId;
+                    }else{
+                        window.location.href = 'NewPlayer.html' + '#' + userId;
+                    }
+                });
+                });
 
         }).catch(function (err) {
             console.log(err);
